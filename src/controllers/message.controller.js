@@ -1,4 +1,5 @@
-import MessageService from '../services/MessageService.js';
+import MessageService from '../services/message.services.js';
+import MessageDAO from '../dao/message.mongodb.dao.js';
 
 export default class MessageController {
   static async create(data) {
@@ -9,12 +10,12 @@ export default class MessageController {
   }
 
   static async get(query = {}) {
-    const messages = await MessageService.findAll(query);
+    const messages = await MessageDAO.getAll(query);
     return messages;
   }
 
   static async getById(messageId) {
-    const message = await MessageService.findById(messageId);
+    const message = await MessageDAO.getById(messageId);
     if (!message) {
       throw new Error(`Message ID not found: ${messageId} 😨`);
     }
@@ -24,14 +25,14 @@ export default class MessageController {
   static async updateById(messageId, data) {
     await MessageController.getById(messageId);
     console.log('Updating the message 📩');
-    await MessageService.updateById(messageId, data);
+    await MessageDAO.updateById(messageId, data);
     console.log('Message updated successfully 📩');
   }
 
   static async deleteById(messageId) {
     await MessageController.getById(messageId);
     console.log('Deleting the message 📩');
-    await MessageService.deleteById(messageId);
+    await MessageDAO.deleteById(messageId);
     console.log('Message deleted successfully 📩');
   }
 }

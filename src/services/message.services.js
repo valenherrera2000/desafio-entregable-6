@@ -1,26 +1,26 @@
-import MessageManager from '../dao/MessageManager.js';
+import messageRepository from '../repositories/message.repository.js';
 
 export default class MessageService {
   static findAll(filter = {}) {
-    return MessageManager.get(filter);
+    return messageRepository.getAll(filter);
   }
 
   static async create(payload) {
     console.log('Creating a new message 📩');
-    const message = await MessageManager.create(payload);
+    const message = await messageRepository.create(payload);
     console.log(`Message created successfully (${message._id}) 📩`);
     return message;
   }
 
   static findById(messageId) {
-    return MessageManager.getById(messageId);
+    return messageRepository.getById(messageId);
   }
 
   static updateById(messageId, payload) {
-    return MessageManager.updateById(messageId, payload);
+    return messageRepository.updateById(messageId, payload);
   }
 
   static deleteById(messageId) {
-    return MessageManager.deleteById(messageId);
+    return messageRepository.deleteById(messageId);
   }
 }
